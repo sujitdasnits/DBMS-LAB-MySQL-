@@ -1,0 +1,38 @@
+/* 1) Find all salespeople whose name starts with ‘P’ and the fourth character is ‘l’.*/
+select * from salespeople where sname like 'p__l';
+/* 2) Select all customers with a rating above 200.00. */
+select * from customers where rating>200;
+/*3) Extract the Salespeople table in the following order : SNUM, SNAME, COMMISSION, CITY.*/
+select snum,sname,comm,city from salespeople;
+/* 4) Select all orders that are greater than the average for 1990-10-03.*/
+select * from orders where amt>(select avg(amt) from orders where odate='1990-10-03');
+/*5) Write a query that totals the orders for each day and places the results in descending order*/
+select sum(amt) as amt, odate from orders group by odate order by amt desc;
+/*6) Write a query that selects the highest rating in each city. */
+select city,max(rating) as rating from customers group by city;
+/* 7) Find all salespeople that are located in either Barcelona or London. (Logical operator)*/
+select * from salespeople where city= 'San Jose' or city ='london';
+/* 8) Fill all customers where rating is not 100, 200 (logical operator) */
+select * from customers where rating not in (100,200);
+/* 9) Count number of entries in customers*/
+select count(*) from customers;
+/* 10) Find the number of orders for more than 3000 amount */
+select count(*) from orders where amt>3000;
+/*11) Find the number of distinct snum customers*/
+select count(distinct snum) from customers;
+/* 12) Find total amt of orders from order table */
+select sum(amt) from orders;
+/*13) Find total amt of orders where odate is 1990-10-03*/
+select sum(amt) from orders where odate='1990-10-03';
+/*14) Find average commision*/
+select avg(comm) from salespeople;
+/*15) Find average order amount placed in the date 1990-10-03*/
+select avg(amt) from orders where odate='1990-10-03';
+/*16) Find the maximum amt of order placed*/
+select max(amt) from orders;
+/*17 On which date the maximum amt of order placed*/
+Select odate from orders where amt = (select max(amt) from orders);
+/*18 Find the minimum amount of order purchased by someone */
+select min(amt) from orders;
+/* 19) Find the customer number and order date who planced the minimum order amount*/
+select cnum, odate, min(amt) from orders;

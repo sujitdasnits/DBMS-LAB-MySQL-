@@ -1,0 +1,53 @@
+/*Summarizing Data with Aggregate Functions.*/
+
+/*1) Write a query that counts all orders for October 3.*/
+
+SELECT count(onum) total_order
+FROM orders
+WHERE odate LIKE '%-10-03';
+
+/* 2) Write a query that counts the number of different non-NULL city values in the
+Customers table.*/
+
+SELECT count(cname) empty_city
+FROM customers
+WHERE cname IS NOT NULL;
+
+/* 3) Write a query that selects each customer’s smallest order.*/
+
+SELECT min(amt) "smallest order", cnum FROM orders GROUP BY cnum;
+
+/* 4) Write a query that selects the first customer, in alphabetical order, whose name
+begins with G.*/
+
+SELECT * FROM customers WHERE cname LIKE 'G%' ORDER BY cname;
+
+/* 5) Write a query that selects the highest rating in each city.*/
+SELECT max(rating) "highest rating" FROM customers;
+
+/* 6) Write a query that counts the number of salespeople registering orders for each
+day. (If a salesperson has more than one order on a given day, he or she should be
+counted only once.).*/
+
+SELECT count(odate)||'SALES PERSON REGISTREDDON' "TOTAL", odate FROM orders GROUP BY odate;
+
+/* Formatting Query output */
+/* 1) Assume each salesperson has a 12% commission. Write a query on the orders table that will
+produce the order number, the salesperson number, and the amount of the salesperson’s
+commission for that order.*/
+
+select onum, snum, amt * 0.12 as Total_commision from orders;
+
+/* 2) Write a query on the Customers table that will find the highest rating in each city. Put the
+output in this form:
+For the city (city), the highest rating is : (rating). */
+
+select concat('For the city:', city, 'The highest rating is:', max(rating)) as citywise_highest_rating from customers group by city;
+
+/*3) Write a query that lists customers in descending order of rating. Output the rating field first,
+followed by the customer’s name and number.*/
+
+select rating, cname, cnum from customers order by rating desc;
+
+/*4) Write a query that totals the orders for each day and places the results in descending order.*/
+select sum(amt) as Total_Amt, odate from orders group by odate order by Total_Amt desc;
